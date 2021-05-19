@@ -57,137 +57,147 @@ class _WebViewWidgetState extends State<WebViewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Segment.screen(screenName: '/web-view-screen');
-    return StoreConnector<AppState, InAppWebViewViewModel>(
-      converter: InAppWebViewViewModel.fromStore,
-      builder: (_, InAppWebViewViewModel viewModel) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).splashColor,
-            toolbarHeight: MediaQuery.of(context).size.height / 17,
-            leading: Builder(
-              builder: (_) => IconButton(
-                icon: Icon(
-                  PlatformIcons(context).back,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  if (webView != null) {
-                    webView.goBack();
-                  }
-                },
+    // Segment.screen(screenName: '/web-view-screen');
+    // return StoreConnector<AppState, InAppWebViewViewModel>(
+    // converter: InAppWebViewViewModel.fromStore,
+    // builder: (_, InAppWebViewViewModel viewModel) {
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text(
+            'Hi',
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Theme.of(context).splashColor,
+          toolbarHeight: MediaQuery.of(context).size.height / 17,
+          leading: Builder(
+            builder: (_) => IconButton(
+              icon: Icon(
+                PlatformIcons(context).back,
+                color: Colors.black,
               ),
+              onPressed: () {
+                if (webView != null) {
+                  webView.goBack();
+                }
+              },
             ),
           ),
-          body: InAppWebView(
-            initialUrl: widget.url,
-            onWebViewCreated: (InAppWebViewController controller) {
-              webView = controller;
-              webView.addJavaScriptHandler(
-                handlerName: "pay",
-                callback: (args) {
-                  Map<String, dynamic> paymentDetails = Map.from(args[0]);
-                  sendSuccessCallback(jobId) async {}
-
-                  sendFailureCallback() {}
-
-                  viewModel.sendTokenFromWebView(
-                    paymentDetails['currency'],
-                    paymentDetails['destination'],
-                    paymentDetails['amount'],
-                    paymentDetails['orderId'],
-                    sendSuccessCallback,
-                    sendFailureCallback,
-                  );
-                },
-              );
-
-              webView.addJavaScriptHandler(
-                handlerName: "topup",
-                callback: (args) {
-                  Map<String, dynamic> data = Map.from(args[0]);
-                  num amount = num.parse(data['amount']);
-
-                  // TODO: Remove eventually
-                  if (amount > 250) {
-                    // TODO: Add error message for large top up
-                    return false;
-                  }
-                  return _handleStripe(amount.toString());
-
-                  /* if (amount > viewModel.secondaryTokenAmount) {
-                    num value = amount - viewModel.secondaryTokenAmount;
-                    return _handleStripe(value.toString());
-                  } else {
-                    return _handleStripe(amount.toString());
-                  } */
-                },
-              );
-            },
-          ),
-        );
-      },
-    );
+        ),
+        body: Text('Hi'));
   }
 }
 
-class InAppWebViewViewModel extends Equatable {
-  final num secondaryTokenAmount;
-  final Function(
-    String currency,
-    String receiverAddress,
-    num amount,
-    dynamic orderId,
-    Function(dynamic) sendSuccessCallback,
-    VoidCallback sendFailureCallback,
-  ) sendTokenFromWebView;
+//webview route
 
-  @override
-  List<Object> get props => [
-        secondaryTokenAmount,
-      ];
+//           body: InAppWebView(
+//             initialUrl: widget.url,
+//             onWebViewCreated: (InAppWebViewController controller) {
+//               webView = controller;
+//               webView.addJavaScriptHandler(
+//                 handlerName: "pay",
+//                 callback: (args) {
+//                   Map<String, dynamic> paymentDetails = Map.from(args[0]);
+//                   sendSuccessCallback(jobId) async {}
 
-  InAppWebViewViewModel({
-    this.secondaryTokenAmount,
-    this.sendTokenFromWebView,
-  });
+//                   sendFailureCallback() {}
 
-  static InAppWebViewViewModel fromStore(Store<AppState> store) {
-    String communityAddress = store.state.cashWalletState.communityAddress;
-    Community community =
-        store.state.cashWalletState.communities[communityAddress] ??
-            Community.initial();
-    final Token token = store.state.cashWalletState.tokens
-            .containsKey(community?.secondaryTokenAddress?.toLowerCase())
-        ? store.state.cashWalletState
-            .tokens[community?.secondaryTokenAddress?.toLowerCase()]
-        : store.state.cashWalletState.tokens[community?.secondaryTokenAddress];
-    final num secondaryTokenAmount = num.parse(formatValue(
-          token?.amount,
-          token?.decimals,
-          withPrecision: true,
-        )) ??
-        0;
-    return InAppWebViewViewModel(
-      secondaryTokenAmount: secondaryTokenAmount,
-      sendTokenFromWebView: (
-        String currency,
-        String receiverAddress,
-        num amount,
-        dynamic orderId,
-        Function(dynamic) sendSuccessCallback,
-        VoidCallback sendFailureCallback,
-      ) {
-        store.dispatch(sendTokenFromWebViewCall(
-          currency,
-          receiverAddress,
-          amount,
-          orderId,
-          sendSuccessCallback,
-          sendFailureCallback,
-        ));
-      },
-    );
-  }
-}
+//                   viewModel.sendTokenFromWebView(
+//                     paymentDetails['currency'],
+//                     paymentDetails['destination'],
+//                     paymentDetails['amount'],
+//                     paymentDetails['orderId'],
+//                     sendSuccessCallback,
+//                     sendFailureCallback,
+//                   );
+//                 },
+//               );
+
+//               webView.addJavaScriptHandler(
+//                 handlerName: "topup",
+//                 callback: (args) {
+//                   Map<String, dynamic> data = Map.from(args[0]);
+//                   num amount = num.parse(data['amount']);
+
+//                   // TODO: Remove eventually
+//                   if (amount > 250) {
+//                     // TODO: Add error message for large top up
+//                     return false;
+//                   }
+//                   return _handleStripe(amount.toString());
+
+//                   /* if (amount > viewModel.secondaryTokenAmount) {
+//                     num value = amount - viewModel.secondaryTokenAmount;
+//                     return _handleStripe(value.toString());
+//                   } else {
+//                     return _handleStripe(amount.toString());
+//                   } */
+//                 },
+//               );
+//             },
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
+
+// class InAppWebViewViewModel extends Equatable {
+//   final num secondaryTokenAmount;
+//   final Function(
+//     String currency,
+//     String receiverAddress,
+//     num amount,
+//     dynamic orderId,
+//     Function(dynamic) sendSuccessCallback,
+//     VoidCallback sendFailureCallback,
+//   ) sendTokenFromWebView;
+
+//   @override
+//   List<Object> get props => [
+//         secondaryTokenAmount,
+//       ];
+
+//   InAppWebViewViewModel({
+//     this.secondaryTokenAmount,
+//     this.sendTokenFromWebView,
+//   });
+
+//   static InAppWebViewViewModel fromStore(Store<AppState> store) {
+//     String communityAddress = store.state.cashWalletState.communityAddress;
+//     Community community =
+//         store.state.cashWalletState.communities[communityAddress] ??
+//             Community.initial();
+//     final Token token = store.state.cashWalletState.tokens
+//             .containsKey(community?.secondaryTokenAddress?.toLowerCase())
+//         ? store.state.cashWalletState
+//             .tokens[community?.secondaryTokenAddress?.toLowerCase()]
+//         : store.state.cashWalletState.tokens[community?.secondaryTokenAddress];
+//     final num secondaryTokenAmount = num.parse(formatValue(
+//           token?.amount,
+//           token?.decimals,
+//           withPrecision: true,
+//         )) ??
+//         0;
+//     return InAppWebViewViewModel(
+//       secondaryTokenAmount: secondaryTokenAmount,
+//       sendTokenFromWebView: (
+//         String currency,
+//         String receiverAddress,
+//         num amount,
+//         dynamic orderId,
+//         Function(dynamic) sendSuccessCallback,
+//         VoidCallback sendFailureCallback,
+//       ) {
+//         store.dispatch(sendTokenFromWebViewCall(
+//           currency,
+//           receiverAddress,
+//           amount,
+//           orderId,
+//           sendSuccessCallback,
+//           sendFailureCallback,
+//         ));
+//       },
+//     );
+//   }
+// }
