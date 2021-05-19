@@ -149,7 +149,7 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - Stripe (19.4.0)
+  - Stripe (19.4.1)
   - stripe_payment (1.0.0):
     - Flutter
     - Stripe (~> 19.4.0)
@@ -184,6 +184,7 @@ DEPENDENCIES:
   - plaid_flutter (from `.symlinks/plugins/plaid_flutter/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - Stripe (from `https://github.com/stripe/stripe-ios.git`, tag `v19.4.1`)
   - stripe_payment (from `.symlinks/plugins/stripe_payment/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
@@ -213,7 +214,6 @@ SPEC REPOS:
     - Reachability
     - SAMKeychain
     - Segment-Branch
-    - Stripe
     - SwiftProtobuf
 
 EXTERNAL SOURCES:
@@ -265,12 +265,20 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/share/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
+  Stripe:
+    :git: https://github.com/stripe/stripe-ios.git
+    :tag: v19.4.1
   stripe_payment:
     :path: ".symlinks/plugins/stripe_payment/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
   webview_flutter:
     :path: ".symlinks/plugins/webview_flutter/ios"
+
+CHECKOUT OPTIONS:
+  Stripe:
+    :git: https://github.com/stripe/stripe-ios.git
+    :tag: v19.4.1
 
 SPEC CHECKSUMS:
   Analytics: ebdc0c3ed93684d10c898f57886e0ce7fbecc240
@@ -320,12 +328,12 @@ SPEC CHECKSUMS:
   Segment-Branch: 5e91faad404e1af9998f5a2bbd44522a0f071786
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  Stripe: 92f1c73a9dbd3c54277ed06a1fea6e08f20414c6
+  Stripe: 03e13dd1c55e59aeeb8614547700199ff1dc4e01
   stripe_payment: 1cbe9c339c21b5ecf01035e80eea351067c67c56
   SwiftProtobuf: 3320217e9d8fb75f36b40282e78c482640fd75dd
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
-PODFILE CHECKSUM: 348dad678b7cce6be8a224f25af1488a984f0e6a
+PODFILE CHECKSUM: 0d67f37c5ea2f66bc9d45b41e27bd1523ddc474e
 
 COCOAPODS: 1.10.1

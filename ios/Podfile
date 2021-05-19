@@ -42,3 +42,7 @@ post_install do |installer|
     end
   end
 end
+
+# The line below is a temporary fix for XCode 12.5 compatibility as per https://github.com/jonasbark/flutter_stripe_payment/issues/284
+# TODO: Remove this line
+pod 'Stripe', :git => 'https://github.com/stripe/stripe-ios.git', :tag => 'v19.4.1'
