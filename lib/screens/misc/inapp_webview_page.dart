@@ -62,29 +62,50 @@ class _WebViewWidgetState extends State<WebViewWidget> {
     // converter: InAppWebViewViewModel.fromStore,
     // builder: (_, InAppWebViewViewModel viewModel) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text(
-            'Hi',
-            style: TextStyle(color: Colors.black),
-          ),
-          backgroundColor: Theme.of(context).splashColor,
-          toolbarHeight: MediaQuery.of(context).size.height / 17,
-          leading: Builder(
-            builder: (_) => IconButton(
-              icon: Icon(
-                PlatformIcons(context).back,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                if (webView != null) {
-                  webView.goBack();
-                }
-              },
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Text(
+          'Hi',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Theme.of(context).splashColor,
+        toolbarHeight: MediaQuery.of(context).size.height / 17,
+        leading: Builder(
+          builder: (_) => IconButton(
+            icon: Icon(
+              PlatformIcons(context).back,
+              color: Colors.black,
             ),
+            onPressed: () {
+              if (webView != null) {
+                webView.goBack();
+              }
+            },
           ),
         ),
-        body: Text('Hi'));
+      ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: Container(
+              height: 100.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 100.0,
+                    child: Card(
+                      child: Text('Jesus'),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
