@@ -57,6 +57,19 @@ class _WebViewWidgetState extends State<WebViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final pageheight = MediaQuery.of(context).size.height;
+    List<Color> colors = [
+      Colors.red,
+      Colors.green,
+      Colors.pink,
+      Colors.purple,
+      Colors.blue,
+      Colors.yellow,
+      Colors.black,
+      Colors.black12,
+      Colors.grey,
+      Colors.blueGrey,
+    ];
     // Segment.screen(screenName: '/web-view-screen');
     // return StoreConnector<AppState, InAppWebViewViewModel>(
     // converter: InAppWebViewViewModel.fromStore,
@@ -64,10 +77,6 @@ class _WebViewWidgetState extends State<WebViewWidget> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(
-          'Hi',
-          style: TextStyle(color: Colors.black),
-        ),
         backgroundColor: Theme.of(context).splashColor,
         toolbarHeight: MediaQuery.of(context).size.height / 17,
         leading: Builder(
@@ -84,26 +93,135 @@ class _WebViewWidgetState extends State<WebViewWidget> {
           ),
         ),
       ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: Container(
-              height: 100.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 100.0,
-                    child: Card(
-                      child: Text('Jesus'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: pageheight * 0.5,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 260,
+                    child: CustomScrollView(
+                      slivers: <Widget>[
+                        SliverToBoxAdapter(
+                          child: Container(
+                            height: 250.0,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 10,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  width: 300.0,
+                                  child: Card(
+                                    margin: EdgeInsets.only(
+                                        top: 25, left: 15, right: 1),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 10),
+                                          child: Text(
+                                            'Saturdays',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Text(
+                                            'BBQ Saturdays',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 30,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Text(
+                                            'Come rain or shine, these BBQ feasts will\nplease a crowd.',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    color: colors[index],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-                },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15,
+                      top: 25,
+                      bottom: 10,
+                    ),
+                    child: Text(
+                      'All restaurants',
+                      style: TextStyle(color: Colors.blueGrey, fontSize: 20),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            InkWell(
+              child: Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 300,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('./assets/images/spitroast.jpg'),
+                            fit: BoxFit.fill),
+                      ),
+                    ),
+                    Text(
+                        'Delifonseca - Local Legends: Delivering\nSaturdays & Sundays!')
+                  ],
+                ),
+                color: Colors.red,
+              ),
+              onTap: () {},
+              focusColor: Colors.blueGrey,
+            ),
+            InkWell(
+              child: Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 300,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('./assets/images/spitroast.jpg'),
+                            fit: BoxFit.fill),
+                      ),
+                    ),
+                    Text(
+                        'Delifonseca - Local Legends: Delivering\nSaturdays & Sundays!')
+                  ],
+                ),
+                color: Colors.red,
+              ),
+              onTap: () {},
+              focusColor: Colors.blueGrey,
+            )
+          ],
+        ),
       ),
     );
   }
