@@ -5,6 +5,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:peepl/models/community/community.dart';
 import 'package:peepl/models/tokens/token.dart';
+import 'package:peepl/screens/home/screens/order_item_screen.dart';
 import 'package:peepl/screens/topup/dialogs/card_failed.dart';
 import 'package:peepl/screens/topup/dialogs/minting_dialog.dart';
 import 'package:peepl/utils/format.dart';
@@ -218,7 +219,12 @@ class _WebViewWidgetState extends State<WebViewWidget> {
                     ],
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OrderItemScreen()));
+                },
                 focusColor: Colors.blueGrey,
               ),
             ),
