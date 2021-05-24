@@ -94,188 +94,192 @@ class _WebViewWidgetState extends State<WebViewWidget> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: pageheight * 0.35,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 258,
-                    child: CustomScrollView(
-                      slivers: <Widget>[
-                        SliverToBoxAdapter(
-                          child: Container(
-                            height: 250.0,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  width: 300.0,
-                                  child: Card(
-                                    margin: EdgeInsets.only(
-                                        top: 25, left: 15, right: 1),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 10, left: 10),
-                                          child: Text(
-                                            'Saturdays',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18),
+      body: Scrollbar(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: pageheight * 0.35,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 258,
+                      child: CustomScrollView(
+                        slivers: <Widget>[
+                          SliverToBoxAdapter(
+                            child: Container(
+                              height: 250.0,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 10,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    width: 300.0,
+                                    child: Card(
+                                      margin: EdgeInsets.only(
+                                          top: 25, left: 15, right: 1),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 10, left: 10),
+                                            child: Text(
+                                              'Saturdays',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Text(
-                                            'BBQ Saturdays',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 30,
-                                                fontWeight: FontWeight.w600),
+                                          Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Text(
+                                              'BBQ Saturdays',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
                                           ),
-                                        ),
-                                        Spacer(),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Text(
-                                            'Come rain or shine, these BBQ feasts will\nplease a crowd.',
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                          Spacer(),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Text(
+                                              'Come rain or shine, these BBQ feasts will\nplease a crowd.',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
+                                      color: colors[index],
                                     ),
-                                    color: colors[index],
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15,
+                        top: 25,
+                      ),
+                      child: Text(
+                        'All restaurants',
+                        style: TextStyle(color: Colors.blueGrey, fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 250,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:
+                                    AssetImage('./assets/images/spitroast.jpg'),
+                                fit: BoxFit.fill),
+                          ),
                         ),
+                        Container(
+                          height: 170,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 15, bottom: 15),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Delifonseca - Local Legends: Delivering\nSaturdays & Sundays!',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  'Delifonseca are here to help you enjoy the finer\ntastes of life, as firm believers that good food\nbegins with beautiful, local ingredients and\ncurating meals that lift the soul!',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.5,
+                                      fontWeight: FontWeight.w300),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 15,
-                      top: 25,
-                    ),
-                    child: Text(
-                      'All restaurants',
-                      style: TextStyle(color: Colors.blueGrey, fontSize: 20),
-                    ),
-                  ),
-                ],
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OrderItemScreen()));
+                  },
+                  focusColor: Colors.blueGrey,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                child: Card(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 250,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:
-                                  AssetImage('./assets/images/spitroast.jpg'),
-                              fit: BoxFit.fill),
-                        ),
-                      ),
-                      Container(
-                        height: 170,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 15, bottom: 15),
-                          child: Column(
-                            children: [
-                              Text(
-                                'Delifonseca - Local Legends: Delivering\nSaturdays & Sundays!',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'Delifonseca are here to help you enjoy the finer\ntastes of life, as firm believers that good food\nbegins with beautiful, local ingredients and\ncurating meals that lift the soul!',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.5,
-                                    fontWeight: FontWeight.w300),
-                              )
-                            ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 250,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:
+                                    AssetImage('./assets/images/spitroast.jpg'),
+                                fit: BoxFit.fill),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => OrderItemScreen()));
-                },
-                focusColor: Colors.blueGrey,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                child: Card(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 250,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:
-                                  AssetImage('./assets/images/spitroast.jpg'),
-                              fit: BoxFit.fill),
-                        ),
-                      ),
-                      Container(
-                        height: 170,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 15, bottom: 15),
-                          child: Column(
-                            children: [
-                              Text(
-                                'Delifonseca - Local Legends: Delivering\nSaturdays & Sundays!',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'Delifonseca are here to help you enjoy the finer\ntastes of life, as firm believers that good food\nbegins with beautiful, local ingredients and\ncurating meals that lift the soul!',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.5,
-                                    fontWeight: FontWeight.w300),
-                              )
-                            ],
+                        Container(
+                          height: 170,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 15, bottom: 15),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Delifonseca - Local Legends: Delivering\nSaturdays & Sundays!',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  'Delifonseca are here to help you enjoy the finer\ntastes of life, as firm believers that good food\nbegins with beautiful, local ingredients and\ncurating meals that lift the soul!',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.5,
+                                      fontWeight: FontWeight.w300),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
+                  onTap: () {},
+                  focusColor: Colors.blueGrey,
                 ),
-                onTap: () {},
-                focusColor: Colors.blueGrey,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
