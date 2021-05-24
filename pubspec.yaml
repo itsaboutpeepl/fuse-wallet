@@ -4,6 +4,7 @@ description: Cross platform mobile Ethereum wallet.
 environment:
   sdk: ">=2.7.0 <3.0.0"
 dependencies:
+  mixpanel_flutter: ^1.0.0
   app_tracking_transparency: ^1.1.0+1
   stripe_payment: ^1.0.10
   plaid_flutter: ^1.1.6

@@ -20,6 +20,8 @@ import 'package:plaid_flutter/plaid_flutter.dart';
 import 'package:virtual_keyboard/virtual_keyboard.dart';
 import 'package:equatable/equatable.dart';
 import 'package:redux/redux.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class _TopUpViewModel extends Equatable {
   final String walletAddress;
@@ -51,6 +53,7 @@ class _TopupScreenState extends State<TopupScreen>
     with SingleTickerProviderStateMixin {
   String amountText = "25";
   bool isPreloading = false;
+  Mixpanel mixpanel;
 
   void _onSuccessCallback(
     String publicToken,
@@ -88,6 +91,12 @@ class _TopupScreenState extends State<TopupScreen>
   void initState() {
     super.initState();
     Segment.screen(screenName: '/topup-screen');
+    initMixpanel();
+  }
+
+  Future<void> initMixpanel() async {
+    mixpanel = await Mixpanel.init(DotEnv().env['Mix_Project_Token'],
+        optOutTrackingDefault: false);
   }
 
   void _handlePlaid(String walletAddress) async {
@@ -135,12 +144,15 @@ class _TopupScreenState extends State<TopupScreen>
         builder: (context) => MintingDialog(amountText, true),
         barrierDismissible: false,
       );
+      mixpanel.track('Stripe ok');
+      mixpanel.timeEvent("GBPx Minted");
     } else {
       if (!response.msg.contains('Cancelled by user')) {
         showDialog(
           context: context,
           builder: (context) => TopUpFailed(),
         );
+        mixpanel.track('Stripe Cancelled');
       }
     }
   }

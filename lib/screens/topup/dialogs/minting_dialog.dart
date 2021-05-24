@@ -6,6 +6,8 @@ import 'package:peepl/models/community/community.dart';
 import 'package:peepl/models/tokens/token.dart';
 import 'package:peepl/screens/topup/dialogs/success_dialog.dart';
 import 'package:redux/redux.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class _MintingDialogViewModel extends Equatable {
   final Token secondaryToken;
@@ -51,6 +53,7 @@ class _MintingDialogState extends State<MintingDialog>
   AnimationController controller;
   Animation<double> scaleAnimation;
   bool isPreloading = false;
+  Mixpanel mixpanel;
 
   @override
   void dispose() {
@@ -72,6 +75,13 @@ class _MintingDialogState extends State<MintingDialog>
     });
 
     controller.forward();
+
+    initMixpanel();
+  }
+
+  Future<void> initMixpanel() async {
+    mixpanel = await Mixpanel.init(DotEnv().env['Mix_Project_Token'],
+        optOutTrackingDefault: false);
   }
 
   @override
@@ -91,6 +101,7 @@ class _MintingDialogState extends State<MintingDialog>
             ),
             barrierDismissible: !widget.showOrderNow,
           );
+          mixpanel.track("GBPx Minted");
         }
       },
       builder: (_, viewModel) => ScaleTransition(
