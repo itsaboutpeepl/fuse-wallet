@@ -35,16 +35,15 @@ class _TopUpViewModel extends Equatable {
 
   static _TopUpViewModel fromStore(Store<AppState> store) {
     return _TopUpViewModel(
-      walletAddress: store.state.userState.walletAddress,
-      stripeStatus: store.state.userState.stripeStatus ?? ,
-      stripeResult: () {
-        store.dispatch(stripeProcessedCall());
-      }
-    );
+        walletAddress: store.state.userState.walletAddress,
+        stripeStatus: store.state.userState.stripeStatus ?? null,
+        stripeResult: () {
+          store.dispatch(stripeProcessedCall());
+        });
   }
 
   @override
-  List<Object> get props => [walletAddress];
+  List<Object> get props => [walletAddress, stripeStatus, stripeResult];
 }
 
 enum TopupType { STRIPE, PLAID }
@@ -132,7 +131,7 @@ class _TopupScreenState extends State<TopupScreen>
     }
   }
 
-  void _handleStripe(String walletAddress, Store store) async {
+  void _handleStripe(String walletAddress) async {
     final StripeCustomResponse response = await StripeService().payWithNewCard(
       amount: amountText,
       walletAddress: walletAddress,
@@ -144,7 +143,6 @@ class _TopupScreenState extends State<TopupScreen>
         builder: (context) => MintingDialog(amountText, true),
         barrierDismissible: false,
       );
-      store.dispatch(stripeProcessedCall());
     } else {
       if (!response.msg.contains('Cancelled by user')) {
         showDialog(
@@ -156,11 +154,11 @@ class _TopupScreenState extends State<TopupScreen>
     }
   }
 
-  _onPress(String walletAddress, store) async {
+  _onPress(String walletAddress) async {
     if (widget.topupType == TopupType.PLAID) {
       _handlePlaid(walletAddress);
     } else if (widget.topupType == TopupType.STRIPE) {
-      _handleStripe(walletAddress, store);
+      _handleStripe(walletAddress);
     }
   }
 
@@ -295,8 +293,12 @@ class _TopupScreenState extends State<TopupScreen>
             opacity: 1,
             labelFontWeight: FontWeight.normal,
             label: I18n.of(context).next_button,
-            onPressed: () => _onPress(
-                viewModel.walletAddress),
+            onPressed: () async {
+              _onPress(
+                viewModel.walletAddress,
+              );
+              viewModel.stripeResult();
+            },
             preload: isPreloading,
             disabled: isPreloading,
             width: 300,
