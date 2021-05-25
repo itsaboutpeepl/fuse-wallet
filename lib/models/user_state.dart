@@ -48,6 +48,7 @@ class UserState {
   @JsonKey(fromJson: _currencyJson)
   final String currency;
   final num totalBalance;
+  final String stripeStatus;
 
   @JsonKey(ignore: true)
   final dynamic signupException;
@@ -104,6 +105,7 @@ class UserState {
     this.signupException,
     this.verifyException,
     this.depositBannerShowed,
+    this.stripeStatus,
   });
 
   factory UserState.initial() {
@@ -146,6 +148,7 @@ class UserState {
       currency: 'usd',
       totalBalance: 0,
       depositBannerShowed: false,
+      stripeStatus: null,
     );
   }
 
@@ -191,6 +194,7 @@ class UserState {
     num totalBalance,
     dynamic verifyException,
     dynamic signupException,
+    String stripeStatus,
   }) {
     return UserState(
       depositBannerShowed: depositBannerShowed ?? this.depositBannerShowed,
@@ -238,6 +242,7 @@ class UserState {
           receiveBackupDialogShowed ?? this.receiveBackupDialogShowed,
       currency: currency ?? this.currency,
       totalBalance: totalBalance ?? this.totalBalance,
+      stripeStatus: stripeStatus ?? this.stripeStatus,
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_segment/flutter_segment.dart';
 import 'package:peepl/models/app_state.dart';
 import 'package:peepl/models/community/community.dart';
 import 'package:peepl/models/tokens/token.dart';
@@ -91,6 +92,7 @@ class _MintingDialogState extends State<MintingDialog>
             ),
             barrierDismissible: !widget.showOrderNow,
           );
+          Segment.track(eventName: 'Minting Success');
         }
       },
       builder: (_, viewModel) => ScaleTransition(

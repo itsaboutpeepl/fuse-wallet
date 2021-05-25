@@ -36,7 +36,12 @@ final userReducers = combineReducers<UserState>([
       _createAccountWalletRequest),
   TypedReducer<UserState, CreateAccountWalletSuccess>(
       _createAccountWalletSuccess),
+  TypedReducer<UserState, StripeProcessed>(_stripeProcessed)
 ]);
+
+UserState _stripeProcessed(UserState state, StripeProcessed action) {
+  return state.copyWith(stripeStatus: 'success');
+}
 
 UserState _createAccountWalletRequest(
     UserState state, CreateAccountWalletRequest action) {
