@@ -10,6 +10,7 @@ UserState _$UserStateFromJson(Map<String, dynamic> json) {
   return UserState(
     walletStatus: json['walletStatus'] as String,
     walletAddress: json['walletAddress'] as String,
+    stripeStatus: json['stripeStatus'] as String,
     communityManagerAddress: json['communityManagerAddress'] as String,
     transferManagerAddress: json['transferManagerAddress'] as String,
     daiPointsManagerAddress: json['daiPointsManagerAddress'] as String,
@@ -77,6 +78,7 @@ Map<String, dynamic> _$UserStateToJson(UserState instance) => <String, dynamic>{
       'loginRequestSuccess': instance.loginRequestSuccess,
       'loginVerifySuccess': instance.loginVerifySuccess,
       'isLoggedOut': instance.isLoggedOut,
+      'stripeStatus': instance.stripeStatus,
       'isContactsSynced': instance.isContactsSynced,
       'backup': instance.backup,
       'displayBalance': instance.displayBalance,

@@ -208,6 +208,10 @@ class DeviceIdSuccess {
   DeviceIdSuccess(this.identifier);
 }
 
+class StripeProcessed {
+  StripeProcessed();
+}
+
 ThunkAction setCountryCode(CountryCode countryCode) {
   return (Store store) async {
     String phone =
@@ -349,6 +353,13 @@ ThunkAction createLocalAccountCall(
       await AppFactory().reportError(e, stackTrace: s);
       errorCallback();
     }
+  };
+}
+
+ThunkAction stripeProcessedCall() {
+  return (Store store) async {
+    store.dispatch(StripeProcessed());
+    store.dispatch(segmentTrackCall("Stripe: Stripe successfull"));
   };
 }
 

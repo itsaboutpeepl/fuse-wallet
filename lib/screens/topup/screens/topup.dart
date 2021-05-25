@@ -8,6 +8,7 @@ import 'package:peepl/constans/keys.dart';
 import 'package:peepl/generated/i18n.dart';
 import 'package:peepl/models/app_state.dart';
 import 'package:peepl/redux/actions/cash_wallet_actions.dart';
+import 'package:peepl/redux/actions/user_actions.dart';
 import 'package:peepl/screens/topup/dialogs/card_failed.dart';
 import 'package:peepl/screens/topup/dialogs/minting_dialog.dart';
 import 'package:peepl/services.dart';
@@ -23,14 +24,22 @@ import 'package:redux/redux.dart';
 
 class _TopUpViewModel extends Equatable {
   final String walletAddress;
+  final String stripeStatus;
+  Function stripeResult;
 
   _TopUpViewModel({
     this.walletAddress,
+    this.stripeStatus,
+    this.stripeResult,
   });
 
   static _TopUpViewModel fromStore(Store<AppState> store) {
     return _TopUpViewModel(
       walletAddress: store.state.userState.walletAddress,
+      stripeStatus: store.state.userState.stripeStatus ?? ,
+      stripeResult: () {
+        store.dispatch(stripeProcessedCall());
+      }
     );
   }
 
@@ -123,7 +132,7 @@ class _TopupScreenState extends State<TopupScreen>
     }
   }
 
-  void _handleStripe(String walletAddress) async {
+  void _handleStripe(String walletAddress, Store store) async {
     final StripeCustomResponse response = await StripeService().payWithNewCard(
       amount: amountText,
       walletAddress: walletAddress,
@@ -135,21 +144,23 @@ class _TopupScreenState extends State<TopupScreen>
         builder: (context) => MintingDialog(amountText, true),
         barrierDismissible: false,
       );
+      store.dispatch(stripeProcessedCall());
     } else {
       if (!response.msg.contains('Cancelled by user')) {
         showDialog(
           context: context,
           builder: (context) => TopUpFailed(),
         );
+        Segment.track(eventName: 'User Cancelled');
       }
     }
   }
 
-  _onPress(String walletAddress) async {
+  _onPress(String walletAddress, store) async {
     if (widget.topupType == TopupType.PLAID) {
       _handlePlaid(walletAddress);
     } else if (widget.topupType == TopupType.STRIPE) {
-      _handleStripe(walletAddress);
+      _handleStripe(walletAddress, store);
     }
   }
 
@@ -284,7 +295,8 @@ class _TopupScreenState extends State<TopupScreen>
             opacity: 1,
             labelFontWeight: FontWeight.normal,
             label: I18n.of(context).next_button,
-            onPressed: () => _onPress(viewModel.walletAddress),
+            onPressed: () => _onPress(
+                viewModel.walletAddress),
             preload: isPreloading,
             disabled: isPreloading,
             width: 300,
