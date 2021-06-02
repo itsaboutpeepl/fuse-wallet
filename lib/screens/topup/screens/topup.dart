@@ -25,7 +25,7 @@ import 'package:redux/redux.dart';
 class _TopUpViewModel extends Equatable {
   final String walletAddress;
   final String stripeStatus;
-  Function stripeResult;
+  final Function stripeResult;
 
   _TopUpViewModel({
     this.walletAddress,
