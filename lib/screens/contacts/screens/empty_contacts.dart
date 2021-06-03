@@ -46,6 +46,7 @@ class _EmptyContactsState extends State<EmptyContacts> {
       });
     }
   }
+
   List<Widget> _buildPageList(ContactsViewModel viewModel) {
     List<Widget> listItems = List();
 
@@ -90,7 +91,10 @@ class _EmptyContactsState extends State<EmptyContacts> {
                   child: Text(I18n.of(context).learn_more),
                   onTap: () {
                     showDialog(
-                        child: ContactsConfirmationScreen(), context: context);
+                      context: context,
+                      builder: (BuildContext context) =>
+                          ContactsConfirmationScreen(),
+                    );
                   },
                 ),
                 SizedBox(
