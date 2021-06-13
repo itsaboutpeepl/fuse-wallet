@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -15,6 +16,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_segment/flutter_segment.dart';
 import 'package:peepl/models/app_state.dart';
 import 'package:peepl/redux/actions/cash_wallet_actions.dart';
+import 'package:peepl/screens/topup/dialogs/timed_out.dart';
 
 class WebViewWidget extends StatefulWidget {
   final String url;
@@ -38,12 +40,23 @@ class _WebViewWidgetState extends State<WebViewWidget> {
       walletAddress: widget.walletAddress,
       currency: 'GBP',
     );
+    Timer timer = Timer(Duration(seconds: 25), () {
+      Navigator.of(context, rootNavigator: true).pop();
+      showDialog(
+        context: context,
+        builder: (context) => TimedOut(),
+        barrierDismissible: true,
+      );
+    });
     if (response.ok) {
       showDialog(
         context: context,
         builder: (context) => MintingDialog(amount, false),
         barrierDismissible: false,
-      );
+      ).then((value) {
+        timer?.cancel();
+        timer = null;
+      });
       return true;
     } else {
       if (!response.msg.contains('Cancelled by user')) {
