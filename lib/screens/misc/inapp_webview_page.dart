@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:peepl/models/community/community.dart';
 import 'package:peepl/models/tokens/token.dart';
 import 'package:peepl/screens/home/screens/order_item_screen.dart';
+import 'package:peepl/screens/home/widgets/order_items_tile.dart';
 import 'package:peepl/screens/topup/dialogs/card_failed.dart';
 import 'package:peepl/screens/topup/dialogs/minting_dialog.dart';
 import 'package:peepl/utils/format.dart';
@@ -93,19 +94,6 @@ class _WebViewWidgetState extends State<WebViewWidget> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).splashColor,
         toolbarHeight: MediaQuery.of(context).size.height / 17,
-        leading: Builder(
-          builder: (_) => IconButton(
-            icon: Icon(
-              PlatformIcons(context).back,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              if (webView != null) {
-                webView.goBack();
-              }
-            },
-          ),
-        ),
       ),
       body: Scrollbar(
         child: SingleChildScrollView(
@@ -136,35 +124,7 @@ class _WebViewWidgetState extends State<WebViewWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, left: 10),
-                                            child: Text(
-                                              'Saturdays',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: Text(
-                                              'BBQ Saturdays',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 30,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Text(
-                                              'Come rain or shine, these BBQ feasts will\nplease a crowd.',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
+                                          CategoriesScroller(),
                                         ],
                                       ),
                                       color: colors[index],
