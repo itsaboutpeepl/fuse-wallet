@@ -138,6 +138,7 @@ class OrderItemScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     'Chicken Sunday Roast (For 1) - \$12.95',
+                                    //did rebase
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500),
