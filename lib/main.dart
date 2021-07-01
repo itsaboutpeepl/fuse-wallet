@@ -172,6 +172,7 @@ class _MyAppState extends State<MyApp> {
           supportedLocales: i18n.supportedLocales,
           localeResolutionCallback:
               i18n.resolution(fallback: Locale("en", "GB")),
+          routes: {}, //find out where to add store.dispatch for PeeplPay
         ));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:peepl/screens/home/widgets/peepl_pay_modal.dart';
 
 class OrderItemScreen extends StatelessWidget {
   final List<String> entries = <String>['A', 'B', 'C'];
@@ -99,7 +100,22 @@ class OrderItemScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                            backgroundColor: Colors.transparent,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(20),
+                                              ),
+                                            ),
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return PeeplPay();
+                                            });
+                                      },
                                       child: Text('Order'),
                                       style: ElevatedButton.styleFrom(
                                         primary: Colors.orange,
@@ -173,7 +189,38 @@ class OrderItemScreen extends StatelessWidget {
                                         width: 6,
                                       ),
                                       ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Container(
+                                                    height: 200,
+                                                    color: Colors.amber,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        Text(
+                                                            'Modal BottomSheet'),
+                                                        ElevatedButton(
+                                                            onPressed: () {},
+                                                            child:
+                                                                ElevatedButton(
+                                                              child: Text(
+                                                                  'Close Modal Bottom Sheet'),
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      context),
+                                                            ))
+                                                      ],
+                                                    ),
+                                                  );
+                                                });
+                                          },
                                           child: Text('Add to cart'),
                                           style: ElevatedButton.styleFrom(
                                               shape: RoundedRectangleBorder(
